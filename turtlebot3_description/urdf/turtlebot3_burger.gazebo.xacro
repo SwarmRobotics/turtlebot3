@@ -3,11 +3,23 @@
   <xacro:arg name="laser_visual" default="false"/>
   <xacro:arg name="imu_visual"   default="false"/>
 
-  <gazebo reference="base_link">
-    <material>Gazebo/DarkGrey</material>
-  </gazebo>
+ 
 
-  <gazebo reference="wheel_left_link">
+ <gazebo reference="base_link_$(arg number)">
+      <material>Gazebo/DarkGrey</material>
+    <sensor type="contact" name="collision_base_$(arg number)">
+       <plugin name="collision_plugin" filename="libgazebo_ros_bumper2.so">
+       <bumperTopicName>bump</bumperTopicName>
+          <frameName>base_link_$(arg number)</frameName>
+        </plugin>
+         <contact>
+          <collision>base_footprint_$(arg number)_fixed_joint_lump__base_col_collision</collision>
+      </contact> 
+              <update_rate> 100 </update_rate>
+  </sensor>
+</gazebo>
+
+  <gazebo reference="wheel_left_link_$(arg number)">
     <mu1>0.1</mu1>
     <mu2>0.1</mu2>
     <kp>500000.0</kp>
@@ -16,9 +28,19 @@
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
     <material>Gazebo/FlatBlack</material>
+     <sensor type="contact" name="collision_lw_$(arg number)">
+       <plugin name="collision_plugin" filename="libgazebo_ros_bumper2.so">
+       <bumperTopicName>bump</bumperTopicName>
+          <frameName>base_link_$(arg number)</frameName>
+        </plugin>
+         <contact>
+          <collision>wheel_left_link_$(arg number)_collision</collision>
+      </contact> 
+              <update_rate> 100 </update_rate>
+  </sensor>
   </gazebo>
 
-  <gazebo reference="wheel_right_link">
+  <gazebo reference="wheel_right_link_$(arg number)">
     <mu1>0.1</mu1>
     <mu2>0.1</mu2>
     <kp>500000.0</kp>
@@ -27,9 +49,23 @@
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
     <material>Gazebo/FlatBlack</material>
+     <sensor type="contact" name="collision_rw_$(arg number)">
+       <plugin name="collision_plugin" filename="libgazebo_ros_bumper2.so">
+       <bumperTopicName>bump</bumperTopicName>
+          <frameName>base_link_$(arg number)</frameName>
+        </plugin>
+         <contact>
+          <collision>wheel_right_link_$(arg number)_collision</collision>
+      </contact> 
+              <update_rate> 100 </update_rate>
+  </sensor>
   </gazebo>
 
-  <gazebo reference="caster_back_link">
+
+
+
+
+  <gazebo reference="caster_back_link_$(arg number)">
     <mu1>0.1</mu1>
     <mu2>0.1</mu2>
     <kp>1000000.0</kp>
@@ -39,8 +75,8 @@
     <material>Gazebo/FlatBlack</material>
   </gazebo>
 
-  <gazebo reference="imu_link">
-    <sensor type="imu" name="imu">
+  <gazebo reference="imu_link_$(arg number)">
+    <sensor type="imu" name="imu_$(arg number)">
       <always_on>true</always_on>
       <visualize>$(arg imu_visual)</visualize>
     </sensor>
@@ -48,20 +84,20 @@
   </gazebo>
 
   <gazebo>
-    <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
+    <plugin name="turtlebot3_burger_controller_$(arg number)" filename="libgazebo_ros_diff_drive.so">
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <odometrySource>world</odometrySource>
       <publishOdomTF>true</publishOdomTF>
-      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <robotBaseFrame>base_footprint_$(arg number)</robotBaseFrame>
       <publishWheelTF>false</publishWheelTF>
       <publishTf>true</publishTf>
       <publishWheelJointState>true</publishWheelJointState>
       <legacyMode>false</legacyMode>
       <updateRate>30</updateRate>
-      <leftJoint>wheel_left_joint</leftJoint>
-      <rightJoint>wheel_right_joint</rightJoint>
+      <leftJoint>wheel_left_joint_$(arg number)</leftJoint>
+      <rightJoint>wheel_right_joint_$(arg number)</rightJoint>
       <wheelSeparation>0.160</wheelSeparation>
       <wheelDiameter>0.066</wheelDiameter>
       <wheelAcceleration>1</wheelAcceleration>
@@ -69,16 +105,16 @@
       <rosDebugLevel>na</rosDebugLevel>
     </plugin>
   </gazebo>
-
+<!--
   <gazebo>
-    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+    <plugin name="imu_plugin_$(arg number)" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
-      <bodyName>imu_link</bodyName>
-      <frameName>imu_link</frameName>
+      <bodyName>imu_link_$(arg number)</bodyName>
+      <frameName>imu_link_$(arg number)</frameName>
       <topicName>imu</topicName>
       <serviceName>imu_service</serviceName>
-      <gaussianNoise>0.0</gaussianNoise>
-      <updateRate>0</updateRate>
+      <gaussianNoise>0.001</gaussianNoise>
+      <updateRate>100</updateRate>
       <imu>
         <noise>
           <type>gaussian</type>
@@ -98,10 +134,27 @@
       </imu>
     </plugin>
   </gazebo>
+-->
 
-  <gazebo reference="base_scan">
+  <gazebo>
+    <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
+      <robotNamespace>burger_$(arg number)</robotNamespace>
+      <updateRate>50.0</updateRate>
+      <bodyName>imu_link_$(arg number)</bodyName>
+      <topicName>imu</topicName>
+      <accelDrift>0.005 0.005 0.005</accelDrift>
+      <accelGaussianNoise>0.01 0.01 0.01</accelGaussianNoise>
+      <rateDrift>0.005 0.005 0.005 </rateDrift>
+      <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+      <headingDrift>0.005</headingDrift>
+      <headingGaussianNoise>0.005</headingGaussianNoise>
+    </plugin>
+  </gazebo>
+
+
+  <gazebo reference="base_scan_$(arg number)">
     <material>Gazebo/FlatBlack</material>
-    <sensor type="ray" name="lds_lfcd_sensor">
+    <sensor type="ray" name="lds_lfcd_sensor_$(arg number)">
       <pose>0 0 0 0 0 0</pose>
       <visualize>$(arg laser_visual)</visualize>
       <update_rate>5</update_rate>
@@ -125,11 +178,30 @@
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+      <plugin name="gazebo_ros_lds_lfcd_controller_$(arg number)" filename="libgazebo_ros_laser.so">
         <topicName>scan</topicName>
-        <frameName>base_scan</frameName>
+        <frameName>base_scan_$(arg number)</frameName>
       </plugin>
     </sensor>
   </gazebo>
+
+
+   <gazebo>
+    <plugin name="magnetic_controller" filename="libhector_gazebo_ros_magnetic.so">
+      <robotNamespace>burger_$(arg number)</robotNamespace>
+      <updateRate>50.0</updateRate>
+      <bodyName>imu_link_$(arg number)</bodyName>
+      <topicName>magnetic</topicName>
+      <referenceHeading>0.0</referenceHeading>
+      <declination>0.0</declination>
+      <inclination>60.0</inclination>
+      <magnitude> 1.2 </magnitude>
+      <offset>0 0 0</offset>
+       <driftFrequency>0.005 0.005 0.005</driftFrequency>
+      <gaussianNoise>0.01 0.01 0.01</gaussianNoise>
+      <useMagneticFieldMsgs>false</useMagneticFieldMsgs>
+    </plugin>
+  </gazebo>
+ 
 
 </robot>
