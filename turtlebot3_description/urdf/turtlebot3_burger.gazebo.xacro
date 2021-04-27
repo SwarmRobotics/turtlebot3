@@ -19,11 +19,13 @@
   </sensor>
 </gazebo>
 
+
+
   <gazebo reference="wheel_left_link_$(arg number)">
-    <mu1>0.1</mu1>
+    <mu1>0.5</mu1>
     <mu2>0.1</mu2>
     <kp>500000.0</kp>
-    <kd>10.0</kd>
+    <kd>5.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
@@ -41,10 +43,10 @@
   </gazebo>
 
   <gazebo reference="wheel_right_link_$(arg number)">
-    <mu1>0.1</mu1>
+ <mu1>0.5</mu1>
     <mu2>0.1</mu2>
     <kp>500000.0</kp>
-    <kd>10.0</kd>
+    <kd>5.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
@@ -142,11 +144,11 @@
       <updateRate>50.0</updateRate>
       <bodyName>imu_link_$(arg number)</bodyName>
       <topicName>imu</topicName>
-      <accelDrift>0.005 0.005 0.005</accelDrift>
+      <accelDrift>0.000 0.000 0.000</accelDrift>
       <accelGaussianNoise>0.01 0.01 0.01</accelGaussianNoise>
-      <rateDrift>0.005 0.005 0.005 </rateDrift>
+      <rateDrift>0.00 0.00 0.00 </rateDrift>
       <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-      <headingDrift>0.005</headingDrift>
+      <headingDrift>0.00</headingDrift>
       <headingGaussianNoise>0.005</headingGaussianNoise>
     </plugin>
   </gazebo>
@@ -191,17 +193,33 @@
       <robotNamespace>burger_$(arg number)</robotNamespace>
       <updateRate>50.0</updateRate>
       <bodyName>imu_link_$(arg number)</bodyName>
-      <topicName>magnetic</topicName>
-      <referenceHeading>0.0</referenceHeading>
-      <declination>0.0</declination>
-      <inclination>60.0</inclination>
-      <magnitude> 1.2 </magnitude>
+      <topicName>magnetic_field</topicName>
+       <referenceHeading>0.0</referenceHeading>
+      <declination>0</declination>
+      <inclination>-68</inclination>
+      <magnitude> 1 </magnitude>
       <offset>0 0 0</offset>
-       <driftFrequency>0.005 0.005 0.005</driftFrequency>
-      <gaussianNoise>0.01 0.01 0.01</gaussianNoise>
-      <useMagneticFieldMsgs>false</useMagneticFieldMsgs>
+       <driftFrequency>0.00 0.00 0.00</driftFrequency>
+      <gaussianNoise>0.001 0.001 0.001</gaussianNoise>
+      <useMagneticFieldMsgs>true</useMagneticFieldMsgs>
     </plugin>
   </gazebo>
  
-
+  <gazebo>
+    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+      <robotNamespace>burger_$(arg number)</robotNamespace>
+      <updateRate>10</updateRate>
+      <bodyName>base_link_$(arg number)</bodyName>
+      <frameId>base_link_$(arg number)</frameId>
+      <topicName>navsat/fix</topicName>
+      <velocityTopicName>navsat/vel</velocityTopicName>
+      <referenceLongitude>8.9</referenceLongitude>
+      <referenceLatitude>49.9</referenceLatitude>
+      <referenceHeading>0</referenceHeading>
+      <referenceAltitude>0</referenceAltitude>
+      <drift>0.000 0.000 0.000</drift>
+      <gaussianNoise>0.01 0.01 0.01</gaussianNoise>
+      <alwayson>true</alwayson>
+    </plugin>
+  </gazebo>
 </robot>
