@@ -19,8 +19,6 @@
   </sensor>
 </gazebo>
 
-
-
  <!--  <mu1>0.5</mu1>
     <mu2>0.1</mu2>
     <kp>500000.0</kp>
@@ -145,7 +143,7 @@
   </gazebo>
 -->
 
- <gazebo>
+  <gazebo>
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
       <robotNamespace>burger_$(arg number)</robotNamespace>
       <updateRate>50.0</updateRate>
@@ -213,19 +211,22 @@
   </gazebo>
  
   <gazebo>
-    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps_faulty.so">
       <robotNamespace>burger_$(arg number)</robotNamespace>
       <updateRate>10</updateRate>
+      <time_offset>$(arg number)</time_offset>
       <bodyName>base_link_$(arg number)</bodyName>
       <frameId>base_link_$(arg number)</frameId>
       <topicName>navsat/fix</topicName>
       <velocityTopicName>navsat/vel</velocityTopicName>
       <referenceLongitude>8.9</referenceLongitude>
       <referenceLatitude>49.9</referenceLatitude>
+      <time_fault>10</time_fault> <!--  time in seconds after simulation start when the GPS stops working -->
+     <location_fault>false</location_fault>
       <referenceHeading>0</referenceHeading>
       <referenceAltitude>0</referenceAltitude>
       <drift>0.000 0.000 0.000</drift>
-      <gaussianNoise>0.01 0.01 0.01</gaussianNoise>
+      <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
       <alwayson>true</alwayson>
     </plugin>
   </gazebo>
