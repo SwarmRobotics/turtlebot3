@@ -221,7 +221,7 @@
       <velocityTopicName>navsat/vel</velocityTopicName>
       <referenceLongitude>8.9</referenceLongitude>
       <referenceLatitude>49.9</referenceLatitude>
-      <time_fault>10</time_fault> <!--  time in seconds after simulation start when the GPS stops working -->
+      <time_fault>30</time_fault> <!--  time in seconds after simulation start when the GPS stops working -->
      <location_fault>false</location_fault>
       <referenceHeading>0</referenceHeading>
       <referenceAltitude>0</referenceAltitude>
