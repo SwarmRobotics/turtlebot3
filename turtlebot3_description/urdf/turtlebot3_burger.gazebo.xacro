@@ -21,15 +21,11 @@
 
 
 
- <!--  <mu1>0.5</mu1>
-    <mu2>0.1</mu2>
-    <kp>500000.0</kp>
-    <kd>5.0</kd> -->
   <gazebo reference="wheel_left_link_$(arg number)">
-<mu1>0.2</mu1>
+    <mu1>0.5</mu1>
     <mu2>0.1</mu2>
     <kp>500000.0</kp>
-    <kd>05.0</kd>
+    <kd>5.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
@@ -47,10 +43,10 @@
   </gazebo>
 
   <gazebo reference="wheel_right_link_$(arg number)">
-<mu1>0.2</mu1>
+ <mu1>0.5</mu1>
     <mu2>0.1</mu2>
     <kp>500000.0</kp>
-    <kd>05.0</kd>
+    <kd>5.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
@@ -69,14 +65,11 @@
 
 
 
-<!-- <mu1>0.1</mu1>
-    <mu2>0.1</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd> -->
+
 
   <gazebo reference="caster_back_link_$(arg number)">
-   <mu1>0.05</mu1>
-    <mu2>0.05</mu2>
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
     <kp>1000000.0</kp>
     <kd>100.0</kd>
     <minDepth>0.001</minDepth>
@@ -145,7 +138,7 @@
   </gazebo>
 -->
 
- <gazebo>
+  <gazebo>
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
       <robotNamespace>burger_$(arg number)</robotNamespace>
       <updateRate>50.0</updateRate>
@@ -154,7 +147,7 @@
       <accelDrift>0.000 0.000 0.000</accelDrift>
       <accelGaussianNoise>0.01 0.01 0.01</accelGaussianNoise>
       <rateDrift>0.00 0.00 0.00 </rateDrift>
-      <rateGaussianNoise>0.05 0.05 0.05 </rateGaussianNoise>
+      <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
       <headingDrift>0.00</headingDrift>
       <headingGaussianNoise>0.005</headingGaussianNoise>
     </plugin>
@@ -207,7 +200,7 @@
       <magnitude> 1 </magnitude>
       <offset>0 0 0</offset>
        <driftFrequency>0.00 0.00 0.00</driftFrequency>
-      <gaussianNoise>0.01 0.01 0.01</gaussianNoise>
+      <gaussianNoise>0.001 0.001 0.001</gaussianNoise>
       <useMagneticFieldMsgs>true</useMagneticFieldMsgs>
     </plugin>
   </gazebo>
