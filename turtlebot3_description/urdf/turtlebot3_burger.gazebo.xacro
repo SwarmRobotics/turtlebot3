@@ -89,7 +89,7 @@
     <plugin name="turtlebot3_burger_controller_$(arg number)" filename="libgazebo_ros_diff_drive.so">
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
+      <odometryFrame>odom_burger$(arg number)</odometryFrame>
       <odometrySource>world</odometrySource>
       <publishOdomTF>true</publishOdomTF>
       <robotBaseFrame>base_footprint_$(arg number)</robotBaseFrame>
