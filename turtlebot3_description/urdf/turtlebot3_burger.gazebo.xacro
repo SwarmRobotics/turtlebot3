@@ -196,8 +196,8 @@
       <topicName>magnetic_field</topicName>
        <referenceHeading>0.0</referenceHeading>
       <declination>0</declination>
-      <inclination>-68</inclination>
-      <magnitude> 1 </magnitude>
+      <inclination>60</inclination>
+      <magnitude> 0.1 </magnitude>
       <offset>0 0 0</offset>
        <driftFrequency>0.00 0.00 0.00</driftFrequency>
       <gaussianNoise>0.001 0.001 0.001</gaussianNoise>
