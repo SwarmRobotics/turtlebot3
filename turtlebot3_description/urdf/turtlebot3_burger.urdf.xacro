@@ -1,16 +1,12 @@
 <?xml version="1.0" ?>
 <robot name="turtlebot3_burger" 
   xmlns:xacro="http://ros.org/wiki/xacro" >
- <xacro:arg name="number" default=""/>
+ <xacro:arg name="number" default="1"/>
  <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
   <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_burger.gazebo.xacro"/>
   <link name="base_footprint_$(arg number)"/>
-
-  <joint name="base_joint_$(arg number)" type="fixed">
-    <parent link="base_footprint_$(arg number)"/>
-    <child link="base_link_$(arg number)"/>
-    <origin xyz="0.0 0.0 0.010" rpy="0 0 0"/>
-  </joint>
+ 
+ 
 
   <link name="base_link_$(arg number)">
     <visual>
@@ -37,12 +33,7 @@
     </inertial>
   </link>
 
-  <joint name="wheel_left_joint_$(arg number)" type="continuous">
-    <parent link="base_link_$(arg number)"/>
-    <child link="wheel_left_link_$(arg number)"/>
-    <origin xyz="0.0 0.08 0.023" rpy="-1.57 0 0"/>
-    <axis xyz="0 0 1"/>
-  </joint>
+  
 
   <link name="wheel_left_link_$(arg number)">
     <visual>
@@ -69,12 +60,6 @@
       </inertial>
   </link>
 
-  <joint name="wheel_right_joint_$(arg number)" type="continuous">
-    <parent link="base_link_$(arg number)"/>
-    <child link="wheel_right_link_$(arg number)"/>
-    <origin xyz="0.0 -0.080 0.023" rpy="-1.57 0 0"/>
-    <axis xyz="0 0 1"/>
-  </joint>
 
   <link name="wheel_right_link_$(arg number)">
     <visual>
@@ -101,11 +86,7 @@
       </inertial>
   </link>
 
-  <joint name="caster_back_joint_$(arg number)" type="fixed">
-    <parent link="base_link_$(arg number)"/>
-    <child link="caster_back_link_$(arg number)"/>
-    <origin xyz="-0.081 0 -0.004" rpy="-1.57 0 0"/>
-  </joint>
+  
 
   <link name="caster_back_link_$(arg number)">
     <collision>
@@ -124,19 +105,9 @@
     </inertial>
   </link>
 
-  <joint name="imu_joint_$(arg number)" type="fixed">
-    <parent link="base_link_$(arg number)"/>
-    <child link="imu_link_$(arg number)"/>
-    <origin xyz="-0.032 0 0.068" rpy="0 0 0"/>
-  </joint>
 
   <link name="imu_link_$(arg number)"/>
 
-  <joint name="scan_joint_$(arg number)" type="fixed">
-    <parent link="base_link_$(arg number)"/>
-    <child link="base_scan_$(arg number)"/>
-    <origin xyz="-0.032 0 0.172" rpy="0 0 0"/>
-  </joint>
 
   <link name="base_scan_$(arg number)">
     <visual>
@@ -163,5 +134,39 @@
     </inertial>
   </link>
  
+ <joint name="base_joint_$(arg number)" type="fixed">
+    <parent link="base_footprint_$(arg number)"/>
+    <child link="base_link_$(arg number)"/>
+    <origin xyz="0.0 0.0 0.010" rpy="0 0 0"/>
+  </joint>
+ 
+  <joint name="wheel_left_joint_$(arg number)" type="continuous">
+    <parent link="base_link_$(arg number)"/>
+    <child link="wheel_left_link_$(arg number)"/>
+    <origin xyz="0.0 0.08 0.023" rpy="-1.57 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  
+  <joint name="wheel_right_joint_$(arg number)" type="continuous">
+    <parent link="base_link_$(arg number)"/>
+    <child link="wheel_right_link_$(arg number)"/>
+    <origin xyz="0.0 -0.080 0.023" rpy="-1.57 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
 
+  <joint name="caster_back_joint_$(arg number)" type="fixed">
+    <parent link="base_link_$(arg number)"/>
+    <child link="caster_back_link_$(arg number)"/>
+    <origin xyz="-0.081 0 -0.004" rpy="-1.57 0 0"/>
+  </joint>
+  <joint name="imu_joint_$(arg number)" type="fixed">
+    <parent link="base_link_$(arg number)"/>
+    <child link="imu_link_$(arg number)"/>
+    <origin xyz="-0.032 0 0.068" rpy="0 0 0"/>
+  </joint>
+  <joint name="scan_joint_$(arg number)" type="fixed">
+    <parent link="base_link_$(arg number)"/>
+    <child link="base_scan_$(arg number)"/>
+    <origin xyz="-0.032 0 0.172" rpy="0 0 0"/>
+  </joint>
 </robot>
