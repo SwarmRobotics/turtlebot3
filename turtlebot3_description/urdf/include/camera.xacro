@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="camera">
+  <joint name="${camera_name}_joint" type="fixed">
+    <parent link="${link_to_connect}"/>
+    <child link="${camera_name}_link"/>
+    <origin rpy="${M_PI} ${M_PI} ${rotation}" xyz="${offset_from_link_x} ${offset_from_link_y} ${offset_from_link_z}"/>
+    <!-- <origin rpy="0 0 0" xyz="${offset_from_link_x} ${offset_from_link_y} ${offset_from_link_z}"/> -->
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <link name="${camera_name}_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${camera_size} ${camera_size} ${camera_size}"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+    <!-- Dummy Joint -->
+  <joint name="dummy_${camera_name}_joint" type="fixed">
+      <axis xyz="0 1 0" />
+      <origin xyz="0.0 0.0 0.0" rpy="-1.57 0 -1.57"/>
+      <parent link="${camera_name}_link"/>
+      <child link="dummy_${camera_name}_link"/>
+    </joint>
+
+    <!-- Dummy Link -->
+  <link name="dummy_${camera_name}_link">  </link>
+
+
+  <gazebo reference="${camera_name}_link">
+    <material>Gazebo/White</material>
+    <sensor type="depth" name="${camera_name}">
+      <update_rate>1.0</update_rate>
+      <camera>
+        <!-- <pose>${offset_from_link_x} ${offset_from_link_y} ${offset_from_link_z} ${M_PI} ${M_PI} ${rotation}</pose> -->
+        <horizontal_fov>${90 * M_PI/180.0}</horizontal_fov>
+        <!-- <lens>
+          <intrinsics>
+            <fx>400</fx>
+            <fy>534</fy>
+            <cx>400</cx>
+            <cy>256</cy>
+            <s>0</s>
+          </intrinsics>
+        </lens> -->
+        <image>
+          <format>R8G8B8</format>
+          <width>512</width>
+          <height>512</height>
+        </image>
+        <clip>
+          <near>0.01</near>
+          <far>30</far>
+        </clip>
+      </camera>
+
+      <plugin name="${camera_name}_controller" filename="libgazebo_ros_openni_kinect.so"> <!--libgazebo_ros_camera.so-->
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>${robot_name}/${camera_name}</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <pointCloudCutoff>0</pointCloudCutoff>
+        <pointCloudCutoffMax>30.0</pointCloudCutoffMax>
+        <frameName>dummy_${camera_name}_link</frameName>
+        <hackBaseline>0.0</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+        
+
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>

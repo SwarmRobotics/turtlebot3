@@ -3,7 +3,44 @@
   xmlns:xacro="http://ros.org/wiki/xacro" >
  <xacro:arg name="number" default=""/>
  <xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
-  <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_burger.gazebo.xacro"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_burger_cameras.gazebo.xacro"/>
+  
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:property name="robot_name" value="turtlebot3_$(arg number)" />
+  <xacro:property name="link_to_connect" value="base_scan_$(arg number)" />
+  
+  <xacro:property name="camera_size" value="0.02" />
+  <xacro:property name="offset_from_link_x" value="-0.07" />
+  <xacro:property name="offset_from_link_y" value="0" />
+  <xacro:property name="offset_from_link_z" value="-0.02" />
+  <xacro:property name="camera_name" value="camera1" />
+  <xacro:property name="rotation" value="0"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/include/camera.xacro"/>
+
+  <xacro:property name="camera_size" value="0.02" />
+  <xacro:property name="offset_from_link_x" value="0" />
+  <xacro:property name="offset_from_link_y" value="0.07" />
+  <xacro:property name="offset_from_link_z" value="-0.02" />
+  <xacro:property name="camera_name" value="camera2" />
+  <xacro:property name="rotation" value="-1.57"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/include/camera.xacro"/>
+
+  <xacro:property name="camera_size" value="0.02" />
+  <xacro:property name="offset_from_link_x" value="0.07" />
+  <xacro:property name="offset_from_link_y" value="0" />
+  <xacro:property name="offset_from_link_z" value="-0.02" />
+  <xacro:property name="camera_name" value="camera3" />
+  <xacro:property name="rotation" value="3.14"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/include/camera.xacro"/>
+
+  <xacro:property name="camera_size" value="0.02" />
+  <xacro:property name="offset_from_link_x" value="0" />
+  <xacro:property name="offset_from_link_y" value="-0.07" />
+  <xacro:property name="offset_from_link_z" value="-0.02" />
+  <xacro:property name="camera_name" value="camera4" />
+  <xacro:property name="rotation" value="1.57"/>
+  <xacro:include filename="$(find turtlebot3_description)/urdf/include/camera.xacro"/>
+
   <link name="base_footprint_$(arg number)"/>
 
   <joint name="base_joint_$(arg number)" type="fixed">
