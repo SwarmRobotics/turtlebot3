@@ -199,7 +199,7 @@
       <updateRate>50.0</updateRate>
       <bodyName>imu_link_$(arg number)</bodyName>
       <topicName>magnetic_field</topicName>
-       <referenceHeading>0.0</referenceHeading>
+       <referenceHeading>90</referenceHeading>
       <declination>0</declination>
       <inclination>-68</inclination>
       <magnitude> 1 </magnitude>
@@ -223,7 +223,7 @@
       <referenceLatitude>49.9</referenceLatitude>
       <time_fault>30</time_fault> <!--  time in seconds after simulation start when the GPS stops working -->
      <location_fault>false</location_fault>
-      <referenceHeading>0</referenceHeading>
+      <referenceHeading>90</referenceHeading>
       <referenceAltitude>0</referenceAltitude>
       <drift>0.000 0.000 0.000</drift>
       <gaussianNoise>0.01 0.01 0.01</gaussianNoise>

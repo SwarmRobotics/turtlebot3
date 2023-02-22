@@ -194,7 +194,7 @@
       <updateRate>50.0</updateRate>
       <bodyName>imu_link_$(arg number)</bodyName>
       <topicName>magnetic_field</topicName>
-       <referenceHeading>0.0</referenceHeading>
+       <referenceHeading>90</referenceHeading>
       <declination>0</declination>
       <inclination>-68</inclination>
       <magnitude> 1 </magnitude>
@@ -215,7 +215,7 @@
       <velocityTopicName>navsat/vel</velocityTopicName>
       <referenceLongitude>8.9</referenceLongitude>
       <referenceLatitude>49.9</referenceLatitude>
-      <referenceHeading>0</referenceHeading>
+      <referenceHeading>90</referenceHeading>
       <referenceAltitude>0</referenceAltitude>
       <drift>0.000 0.000 0.000</drift>
       <gaussianNoise>0.01 0.01 0.01</gaussianNoise>
